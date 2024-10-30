@@ -1,0 +1,23 @@
+services:
+  server:
+    build:
+      context: .
+    ports:
+      - 8000:8000
+    depends_on:
+      - sql
+
+  sql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: investors-sql
+    user: root
+    ports:
+      - 1433:1433
+    environment:
+      - ACCEPT_EULA=Y
+      - "MSSQL_SA_PASSWORD=Admin1234!"
+    volumes:
+      - investors-sql:/var/opt/mssql/data
+
+volumes:
+  investors-sql:
